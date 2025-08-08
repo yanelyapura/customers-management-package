@@ -228,12 +228,6 @@ print(f"Ahorro total VIP: ${stats['ahorro_total_vip']:.2f}")
 
 ## 🛠️ Desarrollo
 
-### CI/CD con GitHub Actions
-- **🚀 Despliegue automático** a GitHub Pages en cada push
-- **🧪 Tests automáticos** en múltiples versiones de Python
-- **🔍 Linting automático** con flake8 y black
-- **📊 Coverage reports** con Codecov
-
 ### Instalación para Desarrollo
 ```bash
 # Clonar repositorio
