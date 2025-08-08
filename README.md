@@ -50,7 +50,8 @@ python main.py
 ### Interfaz Web
 ```bash
 python web_interface.py
-# Luego abrir http://127.0.0.1:5000
+# Se abrirá automáticamente el navegador
+# También disponible en: https://yanelyapura.github.io/customers-management-package/
 ```
 
 ### Uso Programático
@@ -86,8 +87,7 @@ customers-management-package/
 │   ├── __init__.py
 │   ├── cliente.py          # Clases Cliente y ClienteVIP
 │   └── sistema_clientes.py # Sistema de gestión
-├── templates/              # Plantillas HTML
-│   ├── base.html
+├── docs/                   # Demo para GitHub Pages
 │   └── index.html
 ├── web_interface.py        # Interfaz web con Flask
 ├── main.py                 # Interfaz de consola
@@ -139,18 +139,17 @@ class SistemaClientes:
 
 ## 🎨 Interfaz Web
 
-### Características del Dashboard
-- **Estadísticas en tiempo real**
-- **Gestión visual de clientes**
-- **Formularios de registro**
-- **Búsqueda avanzada**
-- **Diseño responsive**
+### Demo en GitHub Pages
+- **🌐 Demo en vivo**: https://yanelyapura.github.io/customers-management-package/
+- **📱 Diseño responsive** y moderno
+- **💻 Ejemplos de código** con syntax highlighting
+- **📊 Estadísticas simuladas** del sistema
+- **📚 Documentación completa** con instrucciones
 
-### Endpoints API
-- `GET /api/estadisticas` - Obtener estadísticas del sistema
-- `GET /api/clientes` - Listar todos los clientes
-- `POST /registrar` - Registrar nuevo cliente
-- `GET /buscar` - Buscar cliente por correo
+### Servidor Local
+- **🔧 Servidor Flask**: `python web_interface.py`
+- **📱 Apertura automática** del navegador
+- **🔄 Redirección** a la demo de GitHub Pages
 
 ## 📊 Estadísticas Disponibles
 
