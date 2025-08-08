@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Sistema de Clientes{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="bi bi-graph-up me-2"></i>
+            Dashboard del Sistema
+        </h1>
+    </div>
+</div>
+
+<!-- Estadísticas -->
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card stats-card">
+            <div class="card-body text-center">
+                <i class="bi bi-people-fill fs-1 mb-2"></i>
+                <h3 class="card-title">{{ stats.total_clientes }}</h3>
+                <p class="card-text">Total Clientes</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <i class="bi bi-check-circle-fill fs-1 mb-2"></i>
+                <h3 class="card-title">{{ stats.clientes_activos }}</h3>
+                <p class="card-text">Clientes Activos</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body text-center">
+                <i class="bi bi-crown-fill fs-1 mb-2"></i>
+                <h3 class="card-title">{{ stats.clientes_vip }}</h3>
+                <p class="card-text">Clientes VIP</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-info text-white">
+            <div class="card-body text-center">
+                <i class="bi bi-currency-dollar fs-1 mb-2"></i>
+                <h3 class="card-title">${{ "%.2f"|format(stats.saldo_total_sistema) }}</h3>
+                <p class="card-text">Saldo Total</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Más estadísticas -->
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-bar-chart me-2"></i>
+                    Estadísticas Detalladas
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <p><strong>Clientes Inactivos:</strong> {{ stats.clientes_inactivos }}</p>
+                        <p><strong>Clientes Regulares:</strong> {{ stats.clientes_regular }}</p>
+                        <p><strong>Total Compras:</strong> ${{ "%.2f"|format(stats.total_compras_sistema) }}</p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Ahorro VIP:</strong> ${{ "%.2f"|format(stats.ahorro_total_vip) }}</p>
+                        <p><strong>Promedio Saldo:</strong> ${{ "%.2f"|format(stats.promedio_saldo) }}</p>
+                        <p><strong>Promedio Compras:</strong> ${{ "%.2f"|format(stats.promedio_compras) }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-lightning me-2"></i>
+                    Acciones Rápidas
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="/registrar" class="btn btn-primary">
+                        <i class="bi bi-person-plus me-2"></i>
+                        Registrar Nuevo Cliente
+                    </a>
+                    <a href="/clientes" class="btn btn-outline-primary">
+                        <i class="bi bi-list-ul me-2"></i>
+                        Ver Todos los Clientes
+                    </a>
+                    <a href="/buscar" class="btn btn-outline-info">
+                        <i class="bi bi-search me-2"></i>
+                        Buscar Cliente
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Gráfico de estadísticas -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-pie-chart me-2"></i>
+                    Distribución de Clientes
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <div class="border rounded p-3">
+                            <h4 class="text-success">{{ stats.clientes_activos }}</h4>
+                            <p class="text-muted mb-0">Activos</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="border rounded p-3">
+                            <h4 class="text-warning">{{ stats.clientes_vip }}</h4>
+                            <p class="text-muted mb-0">VIP</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="border rounded p-3">
+                            <h4 class="text-info">{{ stats.clientes_regular }}</h4>
+                            <p class="text-muted mb-0">Regulares</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Actualizar estadísticas cada 30 segundos
+setInterval(function() {
+    fetch('/api/estadisticas')
+        .then(response => response.json())
+        .then(data => {
+            // Actualizar valores en tiempo real
+            document.querySelectorAll('.card-title').forEach((el, index) => {
+                if (index === 0) el.textContent = data.total_clientes;
+                if (index === 1) el.textContent = data.clientes_activos;
+                if (index === 2) el.textContent = data.clientes_vip;
+                if (index === 3) el.textContent = '$' + data.saldo_total_sistema.toFixed(2);
+            });
+        });
+}, 30000);
+</script>
+{% endblock %}
